@@ -38,10 +38,10 @@ async def everyone(client, message):
       has_permissions = message.sender_chat  
     if has_permissions:
       if len(chatQueue) > 50:
-        await message.reply("⛔️ | I'm already working on my maximum number of 50 chats at the moment. Please try again shortly.")
+        await message.reply("⛔️ | Şuan 50 Sohbet Üzerinde Çalışıyorum")
       else:  
         if message.chat.id in chatQueue:
-          await message.reply("🚫 | There's already an ongoing process in this chat. Please /stop to start a new one.")
+          await message.reply("🚫 | Lütfen İşlemin Bitmesini Bekleyiniz.")
         else:  
           chatQueue.append(message.chat.id)
           if len(message.command) > 1:
@@ -84,17 +84,17 @@ async def everyone(client, message):
                 pass  
               i = i+j
           if i == lenMembersList:    
-            await message.reply(f"✅ | Successfully mentioned **total number of {i} members**.\n❌ | Bots and deleted accounts were rejected.") 
+            await message.reply(f"✅ | Etiketleme Başarılı.") 
           else:
-            await message.reply(f"✅ | Successfully mentioned **{i} members.**\n❌ | Bots and deleted accounts were rejected.")    
+            await message.reply(f"✅ | İşlem Başarılı.")    
           chatQueue.remove(message.chat.id)
     else:
-      await message.reply("👮🏻 | Sorry, **only admins** can execute this command.")  
+      await message.reply("👮🏻 | Üzgünüm, **Sadece Adminler**")  
   except FloodWait as e:
     await asyncio.sleep(e.value)
       
 
-@teletips.on_message(filters.command(["song", "music"]))
+@teletips.on_message(filters.command(["bul", "song"]))
 def song(client, message):
 
     message.delete()
@@ -106,7 +106,7 @@ def song(client, message):
     for i in message.command[1:]:
         query += " " + str(i)
     print(query)
-    m = message.reply("» ᴩʟᴇᴀsᴇ ᴡᴀɪᴛ.")
+    m = message.reply("» İndiriliyor.")
     ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
@@ -124,17 +124,17 @@ def song(client, message):
 
     except Exception as e:
         m.edit(
-            "sᴏɴɢ ɴᴏᴛ ғᴏᴜɴᴅ ᴏɴ ʏᴏᴜᴛᴜʙᴇ"
+            "Sonuç Bulunamadı"
         )
         print(str(e))
         return
-    m.edit("» ᴩʟᴇᴀsᴇ ᴡᴀɪᴛ..")
+    m.edit("» Bekleyiniz..")
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=False)
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
-        rep = f"**ᴛɪᴛʟᴇ :** {title[:25]}\n**ᴅᴜʀᴀᴛɪᴏɴ :** `{duration}`\n**ᴠɪᴇᴡs :** `{views}`\n**ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ​ »** {chutiya}"
+        rep = f"**ᴛɪᴛʟᴇ :** {title[:25]}\n**Süre :** `{duration}`\n**İzlenme :** `{views}`\n**Talep​ »** {chutiya}"
         secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
             dur += int(dur_arr[i]) * secmul
@@ -149,7 +149,7 @@ def song(client, message):
         m.delete()
     except Exception as e:
         m.edit(
-            f"» ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ᴇʀʀᴏʀ"
+            f"» Başarısız"
         )
         print(e)
 
@@ -159,7 +159,7 @@ def song(client, message):
     except Exception as e:
         print(e)
         
-@teletips.on_message(filters.command(["stop","cancel"]))
+@teletips.on_message(filters.command(["durdur","cancel"]))
 async def stop(client, message):
   global stopProcess
   try:
@@ -247,14 +247,10 @@ async def bots(client, message):
 @teletips.on_message(filters.command("start") & filters.private)
 async def start(client, message):
   text = f'''
-Heya {message.from_user.mention},
-My name is **PingAll**. I'm here to help you to get everyone's attention by mentioning all members in your chat.
+Merhaba {message.from_user.mention},
+sᴏɴ ᴅᴇʀᴇᴄᴇ ɢᴇʟɪ̇şᴍɪ̇ş, ʙɪ̇ʀ ᴄ̧ᴏᴋ ᴏ̈ᴢᴇʟʟɪ̇ɢ̆ᴇ sᴀʜɪ̇ᴘ ʙɪ̇ʀ ʙᴏᴛᴜᴍ.
 
-I have some additional cool features and also I can work in channels.
-
-Don't forget to join my [channel](http://t.me/teletipsofficialchannel) to recieve information on all the latest updates.
-
-Hit /help to find out my commands and the use of them.
+Çözüm Ve Öneri [Destek Kanal](http://t.me/SohbetSokağımVip) Katılmayı Unutmayınız
 '''
   await teletips.send_message(message.chat.id, text, disable_web_page_preview=True)
 
@@ -262,16 +258,17 @@ Hit /help to find out my commands and the use of them.
 @teletips.on_message(filters.command("help"))
 async def help(client, message):
   text = '''
-Hey, let's have a quick look at my commands.
+Yardımcı Kullanım Komutlarım.
 
 **Commands**:
-- /ping "input": <i>Mention all members.</i>
-- /remove: <i>Remove all deleted accounts.</i>
-- /admins: <i>Mention all admins.</i>
+- /ping "Merhaba": <i>Üyeleri Etketlemek.</i>
+- /remove: <i>Silinen Hesapları Kaldır.</i>
+- /admins: <i>Adminler Etiketleme.</i>
 - /bots: <i>Get the full bot list.</i>
-- /stop: <i>Stop an on going process.</i>
+- /durdur: <i>Etiketleme İşlemini Durdurun.</i>
+- /bul: <i>Youtube Mp3 İndirme</i>
 
-If you have any questions on how to use me, feel free to ask in my [support group](https://t.me/teletipsofficialontopicchat). More on my [page](https://github.com/teletips/PingAllBot-TeLeTiPs).
+If you have any questions on how to use me, feel free to ask in my [Destek Kanal](https://t.me/SohbetSokağımVip). More on my [Kaynak](https://github.com/zeedslowy/StarTagger).
 '''
   await teletips.send_message(message.chat.id, text, disable_web_page_preview=True)
 
