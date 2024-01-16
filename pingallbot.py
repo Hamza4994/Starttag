@@ -7,6 +7,10 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 import os
+import requests
+import yt_dlp
+from pyrogram import filters
+from youtube_search import YoutubeSearch
 import asyncio
 from pyrogram import enums
 from pyrogram.enums import ChatMemberStatus
@@ -33,8 +37,8 @@ async def everyone(client, message):
     except:
       has_permissions = message.sender_chat  
     if has_permissions:
-      if len(chatQueue) > 5:
-        await message.reply("⛔️ | I'm already working on my maximum number of 5 chats at the moment. Please try again shortly.")
+      if len(chatQueue) > 50:
+        await message.reply("⛔️ | I'm already working on my maximum number of 50 chats at the moment. Please try again shortly.")
       else:  
         if message.chat.id in chatQueue:
           await message.reply("🚫 | There's already an ongoing process in this chat. Please /stop to start a new one.")
@@ -87,63 +91,73 @@ async def everyone(client, message):
     else:
       await message.reply("👮🏻 | Sorry, **only admins** can execute this command.")  
   except FloodWait as e:
-    await asyncio.sleep(e.value) 
+    await asyncio.sleep(e.value)
+      
 
-@teletips.on_message(filters.command(["remove","clean"]))
-async def remove(client, message):
-  global stopProcess
-  try: 
+@teletips.on_message(filters.command(["song", "music"]))
+def song(client, message):
+
+    message.delete()
+    user_id = message.from_user.id
+    user_name = message.from_user.first_name
+    chutiya = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
+
+    query = ""
+    for i in message.command[1:]:
+        query += " " + str(i)
+    print(query)
+    m = message.reply("» ᴩʟᴇᴀsᴇ ᴡᴀɪᴛ.")
+    ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
-      sender = await teletips.get_chat_member(message.chat.id, message.from_user.id)
-      has_permissions = sender.privileges
-    except:
-      has_permissions = message.sender_chat  
-    if has_permissions:
-      bot = await teletips.get_chat_member(message.chat.id, "self")
-      if bot.status == ChatMemberStatus.MEMBER:
-        await message.reply("🕹 | I need admin permissions to remove deleted accounts.")  
-      else:  
-        if len(chatQueue) > 5 :
-          await message.reply("⛔️ | I'm already working on my maximum number of 5 chats at the moment. Please try again shortly.")
-        else:  
-          if message.chat.id in chatQueue:
-            await message.reply("🚫 | There's already an ongoing process in this chat. Please /stop to start a new one.")
-          else:  
-            chatQueue.append(message.chat.id)  
-            deletedList = []
-            async for member in teletips.get_chat_members(message.chat.id):
-              if member.user.is_deleted == True:
-                deletedList.append(member.user)
-              else:
-                pass
-            lenDeletedList = len(deletedList)  
-            if lenDeletedList == 0:
-              await message.reply("👻 | No deleted accounts in this chat.")
-              chatQueue.remove(message.chat.id)
-            else:
-              k = 0
-              processTime = lenDeletedList*10
-              temp = await teletips.send_message(message.chat.id, f"🚨 | Total of {lenDeletedList} deleted accounts has been detected.\n⏳ | Estimated time: {processTime} seconds from now.")
-              if stopProcess: stopProcess = False
-              while len(deletedList) > 0 and not stopProcess:   
-                deletedAccount = deletedList.pop(0)
-                try:
-                  await teletips.ban_chat_member(message.chat.id, deletedAccount.id)
-                except Exception:
-                  pass  
-                k+=1
-                await asyncio.sleep(10)
-              if k == lenDeletedList:  
-                await message.reply(f"✅ | Successfully removed all deleted accounts from this chat.")  
-                await temp.delete()
-              else:
-                await message.reply(f"✅ | Successfully removed {k} deleted accounts from this chat.")  
-                await temp.delete()  
-              chatQueue.remove(message.chat.id)
-    else:
-      await message.reply("👮🏻 | Sorry, **only admins** can execute this command.")  
-  except FloodWait as e:
-    await asyncio.sleep(e.value)                               
+        results = YoutubeSearch(query, max_results=1).to_dict()
+        link = f"https://youtube.com{results[0]['url_suffix']}"
+        # print(results)
+        title = results[0]["title"][:40]
+        thumbnail = results[0]["thumbnails"][0]
+        thumb_name = f"thumb{title}.jpg"
+        thumb = requests.get(thumbnail, allow_redirects=True)
+        open(thumb_name, "wb").write(thumb.content)
+
+        duration = results[0]["duration"]
+        results[0]["url_suffix"]
+        views = results[0]["views"]
+
+    except Exception as e:
+        m.edit(
+            "**😴 sᴏɴɢ ɴᴏᴛ ғᴏᴜɴᴅ ᴏɴ ʏᴏᴜᴛᴜʙᴇ"
+        )
+        print(str(e))
+        return
+    m.edit("» ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ...\n\nᴩʟᴇᴀsᴇ ᴡᴀɪᴛ...")
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info_dict = ydl.extract_info(link, download=False)
+            audio_file = ydl.prepare_filename(info_dict)
+            ydl.process_info(info_dict)
+        rep = f"**ᴛɪᴛʟᴇ :** {title[:25]}\n**ᴅᴜʀᴀᴛɪᴏɴ :** `{duration}`\n**ᴠɪᴇᴡs :** `{views}`\n**ʀᴇǫᴜᴇsᴛᴇᴅ ʙʏ​ »** {chutiya}"
+        secmul, dur, dur_arr = 1, 0, duration.split(":")
+        for i in range(len(dur_arr) - 1, -1, -1):
+            dur += int(dur_arr[i]) * secmul
+            secmul *= 60
+        message.reply_audio(
+            audio_file,
+            caption=rep,
+            thumb=thumb_name,
+            title=title,
+            duration=dur,
+        )
+        m.delete()
+    except Exception as e:
+        m.edit(
+            f"» ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ᴇʀʀᴏʀ"
+        )
+        print(e)
+
+    try:
+        os.remove(audio_file)
+        os.remove(thumb_name)
+    except Exception as e:
+        print(e)
         
 @teletips.on_message(filters.command(["stop","cancel"]))
 async def stop(client, message):
