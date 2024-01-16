@@ -1,22 +1,19 @@
-<h1 align= center>PingAllBot - TeLeTiPs</h1>
-<h3 align = center>Powerful Telegram bot to get everyone's attention by mentioning all members in the chat.
-<br>PingAll bot has some additional cool features and also it can work in channels.
-    
+## [Star Tagger V2] 
+```
+Sohbette tüm üyelerden
+bahsederek
+herkesin
+dikkatini
+çeken güçlü
+Telegram botu
+```
+
 <br>💥 Easy    ⚡️ Fast    ✨ Self Deployable</h3>
 
 
 <p align="center">
 <a href="https://python.org"><img src="http://forthebadge.com/images/badges/made-with-python.svg" alt="made-with-python"></a>
 <br>
-    <img src="https://img.shields.io/github/stars/teletips/PingAllBot-TeLeTiPs?style=for-the-badge" alt="Stars">
-    <img src="https://img.shields.io/github/forks/teletips/PingAllBot-TeLeTiPs?style=for-the-badge" alt="Forks">
-    <img src="https://img.shields.io/github/watchers/teletips/PingAllBot-TeLeTiPs?style=for-the-badge" alt="Watchers"> 
-<br>
-    <img src="https://img.shields.io/github/license/teletips/PingAllBot-TeLeTiPs?style=for-the-badge" alt="License">
-    <img src="https://img.shields.io/github/repo-size/teletips/PingAllBot-TeLeTiPs?style=for-the-badge" alt="Repository Size">
-    <img src="https://img.shields.io/github/contributors/teletips/PingAllBot-TeLeTiPs?style=for-the-badge" alt="Contributors">
-    <img src="https://img.shields.io/github/issues/teletips/PingAllBot-TeLeTiPs?style=for-the-badge" alt="Issues">
-</p>  
 
 
 <h1 align="center">
@@ -27,68 +24,83 @@
 
     
 ## ⚒ Config Vars
+`my.telegram.org` Adresinden Alabilirsiniz
+1. `API_ID` : 
+```
+20658336
+```
+3. `API_HASH` : 
+```
+cedfb5fb4ffee7ecc746b28afc7925e3
+```
+5. `BOT_TOKEN` : Değeri Esinmek İçin, Onunla Konuşabilirsin @Botfather
 
-1. `API_ID` : Telegram API_ID, get it from my.telegram.org/apps
-2. `API_HASH` : Telegram API_ID, get it from my.telegram.org/apps
-3. `BOT_TOKEN` : A Valid Telegram Bot Token, get it from @Botfather
 
+## Komutlar  📄
 
-## 📄 Commands
+### 🛎 Tag , all
 
-### 🛎 ping , all
-
-- To get everyone's attention by mentioning all members in the chat.
+- Sohbette tüm üyelerden bahsederek herkesin dikkatini çekmek.
 
 ```
-/ping <input>    
+/tag <input>    
 ```
     
-### 👻 remove , clean
+### 👻 Temizleme ,
 
-- To remove all deleted accounts from the chat.
+- Silinen tüm hesapları sohbetten kaldırmak için
 
-### 👮🏻 admins , staff
+```
+/clean <input>
+```
 
-- To mention all admins while getting the full non-anonymous admin list of the chat.
+### 👮🏻 Yöneticilier ,
 
-### 👾 bots 
+- Sohbetin tam anonim olmayan yönetici listesini alırken tüm yöneticilerden bahsetmek için.
 
-- To get the full bot list of the chat.
+```
+/admin <input>
+```
 
-### 🛑 stop , cancel
+### 👾 bot
 
-- To stop an on going process in the chat.
- 
- 
-## ☁️ Deployment Methods
+- Sohbetin tam bot listesini almak için.
+
+```
+/bot <input>
+```
+
+### 🎧 , Music
+
+- Kesintisiz Müzik Indirme Özelligi.
+
+```
+/bul <Şarkı İsim>
+```
+## ☁️ Kurulum Metod
 
 ### Heroku
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/teletips/PingAllBot-TeLeTiPs)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/zeedslowy/StarTagger)
     
 ### Okteto
 
 [![Develop on Okteto](https://okteto.com/develop-okteto.svg)](https://cloud.okteto.com)
     
-## ⭐️ Credits
+## ⭐️ Yapımcılar
   
 - [TeLe TiPs](https://github.com/teletips)
 - [Thakshaka](https://t.me/thakshakar)
+- [Türkçe Çeviri 📚](github.com/zeedslowy)
 - [Pyrogram](https://github.com/pyrogram/pyrogram)
 
-
-## 🚨 Warning
-
-- Changing the code is NOT ALLOWED!  
-- Everyone is permitted to copy this work, but you MUST include the following in your README document.
-
 ```
-## Credits
+## Yapımcılar
 - [Ping All Bot by TeLe TiPs] (https://github.com/teletips/PingAllBot-TeLeTiPs)
 ```
 
 
-## ⚖️ License
+## ⚖️ Lisans
   
 Ping All is licensed under the [GNU Affero General Public License v3.0](https://github.com/teletips/PingAllBot-TeLeTiPs/blob/main/LICENSE)
 
