@@ -160,8 +160,8 @@ def song(client, message):
     except Exception as e:
         print(e)
 
-openai.api_key = OPENAI_KEY
-@Mukesh.on_message(filters.command(["image","photo","img","dream"],  prefixes=["+", ".", "/", "-", "?", "$","#","&"] ))
+openai.api_key = "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"
+@Mukesh.on_message(filters.command(["hayal","photo","img","dream"],  prefixes=["+", ".", "/", "-", "?", "$","#","&"] ))
 async def chat(bot, message):
     try:
         start_time = time.time()
@@ -288,6 +288,8 @@ Yardımcı Kullanım Komutlarım.
 - /remove: <i>Silinen Hesapları Kaldır.</i>
 
 - /admins: <i>Adminler Etiketleme.</i>
+
+- /hayal: <i>Yapay Zeka İle Görsel Üretmek.</i>
 
 - /bot: <i>Botların İçeriğini Güncelleyin.</i>
 
