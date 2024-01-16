@@ -257,21 +257,6 @@ Don't forget to join my [channel](http://t.me/teletipsofficialchannel) to reciev
 Hit /help to find out my commands and the use of them.
 '''
 
-buttons = [
-    [
-        InlineKeyboardButton(
-            text="Owner",
-            url="t.me/CerennyFlexQ",
-    [
-        InlineKeyboardButton(
-            text="Aᴅᴅ Mᴇ ᴛᴏ Yᴏᴜʀ Gʀᴏᴜᴘ",
-            url=f"https://t.me/{dispatcher.bot.username}?startgroup=true",
-        ),
-    ],
-    [
-        InlineKeyboardButton(text="ʜᴇʟᴘ ᴀɴᴅ ᴄᴏᴍᴍᴀɴᴅs", callback_data="Main_help"),
-    ],
-
 @teletips.on_message(filters.command("help"))
 async def help(client, message):
   text = '''
