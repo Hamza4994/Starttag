@@ -161,7 +161,7 @@ def song(client, message):
         print(e)
 
 openai.api_key = "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"
-@Mukesh.on_message(filters.command(["hayal","photo","img","dream"],  prefixes=["+", ".", "/", "-", "?", "$","#","&"] ))
+@Mukesh.on_message(filters.command(["hayal","photo","img","dream"],  
 async def chat(bot, message):
     try:
         start_time = time.time()
@@ -177,7 +177,7 @@ async def chat(bot, message):
             telegram_ping = str(round((end_time - start_time) * 1000, 3)) + " ᴍs"
             await message.reply_photo(image_url,caption=f"✨ {telegram_ping} ",parse_mode=ParseMode.DISABLED,reply_markup=InlineKeyboardMarkup(X)) 
     except Exception as e:
-            await message.reply_text(f"**ᴇʀʀᴏʀ: **  ` {e} `")
+            await message.reply_text(f"**ᴇʀʀᴏʀ:**")
         
 @teletips.on_message(filters.command(["durdur","cancel"]))
 async def stop(client, message):
