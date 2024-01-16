@@ -7,6 +7,7 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 import os
+import openai
 import requests
 import yt_dlp
 from pyrogram import filters
@@ -158,6 +159,25 @@ def song(client, message):
         os.remove(thumb_name)
     except Exception as e:
         print(e)
+
+openai.api_key = OPENAI_KEY
+@Mukesh.on_message(filters.command(["image","photo","img","dream"],  prefixes=["+", ".", "/", "-", "?", "$","#","&"] ))
+async def chat(bot, message):
+    try:
+        start_time = time.time()
+        await bot.send_chat_action(message.chat.id, ChatAction.UPLOAD_PHOTO)
+        if len(message.command) < 2:
+            await message.reply_text(
+            "**𝗞𝘂𝗹𝗹𝗮𝗻ı𝗺 :**\n\n`/dream 𝗧𝘂𝗺𝗯𝗹𝗿 𝗦𝗲𝘃𝗴𝗶𝗹𝗶𝗹𝗲𝗿 𝗚ü𝗻ü `")
+        else:
+            a = message.text.split(' ', 1)[1]
+            response= openai.Image.create(prompt=a ,n=1,size="1280x1024")
+            image_url = response['data'][0]['url']
+            end_time = time.time()
+            telegram_ping = str(round((end_time - start_time) * 1000, 3)) + " ᴍs"
+            await message.reply_photo(image_url,caption=f"✨ {telegram_ping} ",parse_mode=ParseMode.DISABLED,reply_markup=InlineKeyboardMarkup(X)) 
+    except Exception as e:
+            await message.reply_text(f"**ᴇʀʀᴏʀ: **  ` {e} `")
         
 @teletips.on_message(filters.command(["durdur","cancel"]))
 async def stop(client, message):
