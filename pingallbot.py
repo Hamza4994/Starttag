@@ -270,8 +270,6 @@ Yardımcı Kullanım Komutlarım.
 
 - /admins: <i>Adminler Etiketleme.</i>
 
-- /hayal: <i>Yapay Zeka İle Görsel Üretmek.</i>
-
 - /bot: <i>Botların İçeriğini Güncelleyin.</i>
 
 - /durdur: <i>Etiketleme İşlemini Durdurun.</i>
