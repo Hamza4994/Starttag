@@ -27,7 +27,7 @@ chatQueue = []
 
 stopProcess = False
 
-@teletips.on_message(filters.command(["ping","all"]))
+@teletips.on_message(filters.command(["tag","all"]))
 async def everyone(client, message):
   global stopProcess
   try: 
@@ -134,7 +134,7 @@ def song(client, message):
             info_dict = ydl.extract_info(link, download=False)
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
-        rep = f"**ᴛɪᴛʟᴇ :** {title[:25]}\n**Süre :** `{duration}`\n**İzlenme :** `{views}`\n**Talep​ »** {chutiya}"
+        rep = f"**Başlık :** {title[:25]}\n**Süre :** `{duration}`\n**İzlenme :** `{views}`\n**Talep​ »** {chutiya}"
         secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
             dur += int(dur_arr[i]) * secmul
@@ -170,12 +170,12 @@ async def stop(client, message):
       has_permissions = message.sender_chat  
     if has_permissions:
       if not message.chat.id in chatQueue:
-        await message.reply("🤷🏻‍♀️ | There is no ongoing process to stop.")
+        await message.reply("🤷🏻‍♀️ | Maleaef Şuan Etiketleme İşlemindeyim.")
       else:
         stopProcess = True
-        await message.reply("🛑 | Stopped.")
+        await message.reply("🛑 | Durdurldu.")
     else:
-      await message.reply("👮🏻 | Sorry, **only admins** can execute this command.")
+      await message.reply("👮🏻 | Üzgünüm, **Sadece Adminler**")
   except FloodWait as e:
     await asyncio.sleep(e.value)
 
@@ -199,13 +199,13 @@ async def admins(client, message):
     try:
       owner = ownerList[0]
       if owner.username == None:
-        text2 += f"👑 Owner\n└ {owner.mention}\n\n👮🏻 Admins\n"
+        text2 += f"👑 Sahip\n└ {owner.mention}\n\n👮🏻 Admin 1\n"
       else:
-        text2 += f"👑 Owner\n└ @{owner.username}\n\n👮🏻 Admins\n"
+        text2 += f"👑 Sahip\n└ @{owner.username}\n\n👮🏻 Admin 2\n"
     except:
-      text2 += f"👑 Owner\n└ <i>Hidden</i>\n\n👮🏻 Admins\n"
+      text2 += f"👑 Sahip\n└ <i>Gizemli</i>\n\n👮🏻 Admin 3\n"
     if len(adminList) == 0:
-      text2 += "└ <i>Admins are hidden</i>"  
+      text2 += "└ <i>Gizli Yöneticiler</i>"  
       await teletips.send_message(message.chat.id, text2)   
     else:  
       while len(adminList) > 1:
@@ -220,26 +220,26 @@ async def admins(client, message):
           text2 += f"└ {admin.mention}\n\n"
         else:
           text2 += f"└ @{admin.username}\n\n"
-      text2 += f"✅ | **Total number of admins**: {lenAdminList}\n❌ | Bots and hidden admins were rejected."  
+      text2 += f"✅ | **Toplam Yöneticiler Listesi**"  
       await teletips.send_message(message.chat.id, text2)           
   except FloodWait as e:
     await asyncio.sleep(e.value)       
 
-@teletips.on_message(filters.command("bots"))
+@teletips.on_message(filters.command("bot"))
 async def bots(client, message):  
   try:    
     botList = []
     async for bot in teletips.get_chat_members(message.chat.id, filter=enums.ChatMembersFilter.BOTS):
       botList.append(bot.user)
     lenBotList = len(botList) 
-    text3  = f"**BOT LIST - {message.chat.title}**\n\n🤖 Bots\n"
+    text3  = f"**BOT LISTESİ - {message.chat.title}**\n\n🤖 Bots\n"
     while len(botList) > 1:
       bot = botList.pop(0)
       text3 += f"├ @{bot.username}\n"    
     else:    
       bot = botList.pop(0)
       text3 += f"└ @{bot.username}\n\n"
-      text3 += f"✅ | **Total number of bots**: {lenBotList}"  
+      text3 += f"✅ | **Toplam Bot Listesi**: {lenBotList}"  
       await teletips.send_message(message.chat.id, text3)
   except FloodWait as e:
     await asyncio.sleep(e.value)
@@ -251,6 +251,8 @@ Merhaba {message.from_user.mention},
 sᴏɴ ᴅᴇʀᴇᴄᴇ ɢᴇʟɪ̇şᴍɪ̇ş, ʙɪ̇ʀ ᴄ̧ᴏᴋ ᴏ̈ᴢᴇʟʟɪ̇ɢ̆ᴇ sᴀʜɪ̇ᴘ ʙɪ̇ʀ ʙᴏᴛᴜᴍ.
 
 Çözüm Ve Öneri [Destek Kanal](http://t.me/SohbetSokağımVip) Katılmayı Unutmayınız
+
+Kullanım Ve Özelliklerim İçin /help Komutu Kullanabilirsiniz
 '''
   await teletips.send_message(message.chat.id, text, disable_web_page_preview=True)
 
@@ -261,14 +263,14 @@ async def help(client, message):
 Yardımcı Kullanım Komutlarım.
 
 **Commands**:
-- /ping "Merhaba": <i>Üyeleri Etketlemek.</i>
+- /tag "Merhaba": <i>Üyeleri Etketlemek.</i>
 - /remove: <i>Silinen Hesapları Kaldır.</i>
 - /admins: <i>Adminler Etiketleme.</i>
-- /bots: <i>Get the full bot list.</i>
+- /bot: <i>Botların İçeriğini Güncelleyin.</i>
 - /durdur: <i>Etiketleme İşlemini Durdurun.</i>
 - /bul: <i>Youtube Mp3 İndirme</i>
 
-If you have any questions on how to use me, feel free to ask in my [Destek Kanal](https://t.me/SohbetSokağımVip). More on my [Kaynak](https://github.com/zeedslowy/StarTagger).
+Güncellemeler Hakkında Bilgi İçin [Destek Kanal](https://t.me/SohbetSokağımVip) Kaynak Kodlarım 🥀 [Kaynak](https://github.com/zeedslowy/StarTagger)
 '''
   await teletips.send_message(message.chat.id, text, disable_web_page_preview=True)
 
