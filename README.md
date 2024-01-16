@@ -48,35 +48,20 @@ cedfb5fb4ffee7ecc746b28afc7925e3
     
 ### 👻 Temizleme ,
 
-- Silinen tüm hesapları sohbetten kaldırmak için
-
-```
-/clean <input>
-```
+- Silinen tüm hesapları sohbetten kaldırma. 
 
 ### 👮🏻 Yöneticilier ,
 
-- Sohbetin tam anonim olmayan yönetici listesini alırken tüm yöneticilerden bahsetmek için.
-
-```
-/admin <input>
-```
+- Sohbetin tam anonim olmayan yönetici listesini alırken tüm yöneticilerden bahsetme.
 
 ### 👾 bot
 
-- Sohbetin tam bot listesini almak için.
-
-```
-/bot <input>
-```
+- Sohbetin tam bot listesini alma.
 
 ### 🎧 , Music
 
 - Kesintisiz Müzik Indirme Özelligi.
 
-```
-/bul <Şarkı İsim>
-```
 ## ☁️ Kurulum Metod
 
 ### Heroku
