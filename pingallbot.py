@@ -161,7 +161,7 @@ def song(client, message):
         print(e)
 
 openai.api_key = "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"
-@Mukesh.on_message(filters.command(["hayal","photo","img","dream"],  
+@Mukesh.on_message(filters.command(["hayal","photo","img","dream"]))
 async def chat(bot, message):
     try:
         start_time = time.time()
