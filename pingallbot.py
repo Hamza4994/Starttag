@@ -195,7 +195,7 @@ async def admins(client, message):
       else:
         pass   
     lenAdminList= len(ownerList) + len(adminList)  
-    text2 = f"**GROUP STAFF - {message.chat.title}**\n\n"
+    text2 = f"**Grup Yönetici Listesi - {message.chat.title}**\n\n"
     try:
       owner = ownerList[0]
       if owner.username == None:
@@ -232,7 +232,7 @@ async def bots(client, message):
     async for bot in teletips.get_chat_members(message.chat.id, filter=enums.ChatMembersFilter.BOTS):
       botList.append(bot.user)
     lenBotList = len(botList) 
-    text3  = f"**BOT LISTESİ - {message.chat.title}**\n\n🤖 Bots\n"
+    text3  = f"**BOT LISTESİ - {message.chat.title}**\n\n🤖 | Mevcut Botlarınız\n"
     while len(botList) > 1:
       bot = botList.pop(0)
       text3 += f"├ @{bot.username}\n"    
@@ -250,7 +250,7 @@ async def start(client, message):
 Merhaba {message.from_user.mention},
 sᴏɴ ᴅᴇʀᴇᴄᴇ ɢᴇʟɪ̇şᴍɪ̇ş, ʙɪ̇ʀ ᴄ̧ᴏᴋ ᴏ̈ᴢᴇʟʟɪ̇ɢ̆ᴇ sᴀʜɪ̇ᴘ ʙɪ̇ʀ ʙᴏᴛᴜᴍ.
 
-Çözüm Ve Öneri [Destek Kanal](http://t.me/SohbetSokağımVip) Katılmayı Unutmayınız
+Çözüm Ve Öneri İçin [Destek Kanal](t.me/SohbetSokagimVip). Katılmayı Unutmayınız
 
 Kullanım Ve Özelliklerim İçin /help Komutu Kullanabilirsiniz
 '''
@@ -262,15 +262,17 @@ async def help(client, message):
   text = '''
 Yardımcı Kullanım Komutlarım.
 
-**Commands**:
-- /tag "Merhaba": <i>Üyeleri Etketlemek.</i>
+**Yardım Menüsü**:
+- /tag [ Merhaba ]: <i>Üyeleri Etketlemek.</i>
 - /remove: <i>Silinen Hesapları Kaldır.</i>
 - /admins: <i>Adminler Etiketleme.</i>
 - /bot: <i>Botların İçeriğini Güncelleyin.</i>
 - /durdur: <i>Etiketleme İşlemini Durdurun.</i>
 - /bul: <i>Youtube Mp3 İndirme</i>
 
-Güncellemeler Hakkında Bilgi İçin [Destek Kanal](https://t.me/SohbetSokağımVip) Kaynak Kodlarım 🥀 [Kaynak](https://github.com/zeedslowy/StarTagger)
+Güncellemeler Hakkında Bilgi İçin [Destek Kanal](t.me/SohbetSokagimVip).
+
+Kaynak Kodlarım 🥀 [Kaynak](https://github.com/zeedslowy/StarTagger).
 '''
   await teletips.send_message(message.chat.id, text, disable_web_page_preview=True)
 
