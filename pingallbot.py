@@ -271,10 +271,6 @@ buttons = [
     [
         InlineKeyboardButton(text="ʜᴇʟᴘ ᴀɴᴅ ᴄᴏᴍᴍᴀɴᴅs", callback_data="Main_help"),
     ],
-    
-
-]
-
 
 @teletips.on_message(filters.command("help"))
 async def help(client, message):
