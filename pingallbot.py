@@ -292,7 +292,7 @@ Yardımcı Kullanım Komutlarım.
 
 Güncellemeler Hakkında Bilgi İçin [Destek Kanal](t.me/SohbetSokagimVip).
 
-Kaynak Kodlarım 🥀 [Kaynak](https://github.com/zeedslowy/StarTagger).
+Kaynak Kodlarım [Kaynak](https://github.com/zeedslowy/StarTagger).
 '''
   await teletips.send_message(message.chat.id, text, disable_web_page_preview=True)
 
