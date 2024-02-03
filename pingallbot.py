@@ -245,15 +245,29 @@ async def bots(client, message):
   except FloodWait as e:
     await asyncio.sleep(e.value)
 
-@teletips.on_message(filters.command("start") & filters.private)
-async def start(client, message):
-  text = f'''
-Merhaba {message.from_user.mention},
-sᴏɴ ᴅᴇʀᴇᴄᴇ ɢᴇʟɪ̇şᴍɪ̇ş, ʙɪ̇ʀ ᴄ̧ᴏᴋ ᴏ̈ᴢᴇʟʟɪ̇ɢ̆ᴇ sᴀʜɪ̇ᴘ ʙɪ̇ʀ ʙᴏᴛᴜᴍ.
+@teletips.on_message(filters.command("start"))
+async def start(bot: Client, msg: Message):
+    me2 = (await bot.get_me()).mention
+    await bot.send_message(
+        chat_id=msg.chat.id,
+        text=f"""Selam {msg.from_user.mention},
 
-Çözüm Ve Öneri İçin [Destek Kanal](t.me/SohbetSokagimVip). Katılmayı Unutmayınız
+Tʜɪs ɪs {me2},
+Son Derece Etiket Ve Özellikleri İle Donatılmış Bir Botum,
 
-Kullanım Ve Özelliklerim İçin /help Komutu Kullanabilirsiniz
+Sahip 🖤 ʙʏ : [Profile](tg://user?id={OWNER_ID}) !""",
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(text="Kullanım Komutlar", callback_data="help")
+                ],
+                [
+                    InlineKeyboardButton("Destek", user_id=OWNER_ID)
+                ]
+            ]
+        ),
+        disable_web_page_preview=True,
+    )
 '''
   await teletips.send_message(message.chat.id, text, disable_web_page_preview=True)
 
