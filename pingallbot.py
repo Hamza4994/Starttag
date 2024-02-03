@@ -259,10 +259,10 @@ Sahip 🖤 ʙʏ : [Profile](tg://user?id={OWNER_ID}) !""",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(text="Kullanım Komutlar", callback_data="help")
+                    InlineKeyboardButton(text="💎 Kullanım Komutlar 💎", callback_data="help")
                 ],
                 [
-                    InlineKeyboardButton("Destek", user_id=OWNER_ID)
+                    InlineKeyboardButton("🥀 Destek 🥀", user_id=OWNER_ID)
                 ]
             ]
         ),
