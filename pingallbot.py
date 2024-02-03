@@ -244,33 +244,107 @@ async def bots(client, message):
       await teletips.send_message(message.chat.id, text3)
   except FloodWait as e:
     await asyncio.sleep(e.value)
+      
 
-@teletips.on_message(filters.command("start"))
-async def start(bot: Client, msg: Message):
-    me2 = (await bot.get_me()).mention
-    await bot.send_message(
-        chat_id=msg.chat.id,
-        text=f"""Selam {msg.from_user.mention},
+@client.on(events.NewMessage(pattern="^@btag ?(.*)"))
+@client.on(events.NewMessage(pattern="^@utag ?(.*)"))
+@client.on(events.NewMessage(pattern="^/ctag ?(.*)"))
+@client.on(events.NewMessage(pattern="^@mention ?(.*)"))
+async def mentionall(event):
+    chat_id = event.chat_id
+    if event.is_private:
+        return await event.respond(
+            "__This command can be use in groups and channels!__"
+        )
 
-Tʜɪs ɪs {me2},
-Son Derece Etiket Ve Özellikleri İle Donatılmış Bir Botum,
+    is_admin = False
+    try:
+        partici_ = await client(GetParticipantRequest(event.chat_id, event.sender_id))
+    except UserNotParticipantError:
+        is_admin = False
+    else:
+        if isinstance(
+            partici_.participant, (ChannelParticipantAdmin, ChannelParticipantCreator)
+        ):
+            is_admin = True
+    if not is_admin:
+        return await event.respond("__Only admins can mention all!__")
 
-Sahip 🖤 ʙʏ : [Profile](tg://user?id={OWNER_ID}) !""",
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(text="💎 Kullanım Komutlar 💎", callback_data="help")
-                ],
-                [
-                    InlineKeyboardButton("🥀 Destek 🥀", user_id=OWNER_ID)
-                ]
-            ]
-        ),
-        disable_web_page_preview=True,
-    )
+    if event.pattern_match.group(1) and event.is_reply:
+        return await event.respond("__Give me one argument!__")
+    elif event.pattern_match.group(1):
+        mode = "text_on_cmd"
+        msg = event.pattern_match.group(1)
+    elif event.is_reply:
+        mode = "text_on_reply"
+        msg = await event.get_reply_message()
+        if msg == None:
+            return await event.respond(
+                "__ɪ ᴄᴀɴ'ᴛ ᴍᴇɴᴛɪᴏɴ ᴍᴇᴍʙᴇʀs ғᴏʀ ᴏʟᴅᴇʀ ᴍᴇssᴀɢᴇs!__"
+            )
+    else:
+        return await event.respond(
+            "__Reply to a message or give me some text to mention others!__"
+        )
+
+    spam_chats.append(chat_id)
+    usrnum = 0
+    usrtxt = ""
+    async for usr in client.iter_participants(chat_id):
+        if not chat_id in spam_chats:
+            break
+        usrnum += 1
+        usrtxt += f"[{usr.first_name}](tg://user?id={usr.id}), "
+        if usrnum == 15:
+            if mode == "text_on_cmd":
+                txt = f"{msg}\n{usrtxt}"
+                await client.send_message(chat_id, txt)
+            elif mode == "text_on_reply":
+                await msg.reply(usrtxt)
+            await asyncio.sleep(3)
+            usrnum = 0
+            usrtxt = ""
+    try:
+        spam_chats.remove(chat_id)
+    except:
+        pass
+
+
+@client.on(events.NewMessage(pattern="^/cancel$"))
+async def cancel_spam(event):
+    if not event.chat_id in spam_chats:
+        return await event.respond("ᴛʜᴇʀᴇ ɪs ɴᴏ ᴘʀᴏᴄᴄᴇss ᴏɴ ɢᴏɪɴɢ..")
+    is_admin = False
+    try:
+        partici_ = await client(GetParticipantRequest(event.chat_id, event.sender_id))
+    except UserNotParticipantError:
+        is_admin = False
+    else:
+        if isinstance(
+            partici_.participant, (ChannelParticipantAdmin, ChannelParticipantCreator)
+        ):
+            is_admin = True
+    if not is_admin:
+        return await event.respond("__ᴏɴʟʏ ᴀᴅᴍɪɴs ᴄᴀɴ ᴇxᴇᴄᴜᴛᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ!__")
+
+    else:
+        try:
+            spam_chats.remove(event.chat_id)
+        except:
+            pass
+        return await event.respond("sᴛᴏᴘᴘᴇᴅ ᴍᴇɴᴛɪᴏɴ.__")
+
+@teletips.on_message(filters.command("start") & filters.private)
+async def start(client, message):
+  text = f'''
+Merhaba {message.from_user.mention},
+sᴏɴ ᴅᴇʀᴇᴄᴇ ɢᴇʟɪ̇şᴍɪ̇ş, ʙɪ̇ʀ ᴄ̧ᴏᴋ ᴏ̈ᴢᴇʟʟɪ̇ɢ̆ᴇ sᴀʜɪ̇ᴘ ʙɪ̇ʀ ʙᴏᴛᴜᴍ.
+
+Çözüm Ve Öneri İçin [Destek Kanal](t.me/SohbetSokagimVip). Katılmayı Unutmayınız
+
+Kullanım Ve Özelliklerim İçin /help Komutu Kullanabilirsiniz
 '''
   await teletips.send_message(message.chat.id, text, disable_web_page_preview=True)
-
 
 @teletips.on_message(filters.command("help"))
 async def help(client, message):
