@@ -4,7 +4,7 @@
 
 # Changing the code is not allowed! Read GNU AFFERO GENERAL PUBLIC LICENSE: https://github.com/teletips/PingAllBot-teletips/blob/main/LICENSE
 
-from pyrogram import Client, filters
+from pyrogram import Client, filtersss
 from pyrogram.types import Message
 import os
 import requests
